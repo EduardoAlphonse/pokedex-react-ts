@@ -5,6 +5,8 @@ export const Image = styled.img`
   width: 64px;
   height: 64px;
 
+  transform: scale(1.3);
+
   transition: transform 0.2s;
 `;
 
@@ -32,6 +34,7 @@ export const Container = styled.div`
   gap: 12px;
 
   min-width: 180px;
+  height: min-content;
   padding: 20px 0;
   border-radius: 12px;
   background: var(--white);
@@ -39,12 +42,18 @@ export const Container = styled.div`
   overflow: hidden;
   cursor: pointer;
 
+  transition: box-shadow 0.3s;
+
   *:not(ColoredLabel) {
     z-index: 1;
   }
 
+  &:hover {
+    box-shadow: 0px 17px 23px -12px rgba(0, 0, 0, 0.2);
+  }
+
   &:hover ${Image} {
-    transform: scale(1.2);
+    transform: scale(1.8);
   }
 
   &:hover ${ColoredLabel} {

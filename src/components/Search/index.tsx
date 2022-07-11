@@ -5,7 +5,7 @@ import { Input, Container, Wrapper } from "./styles";
 
 export const Search = ({ ...rest }: InputHTMLAttributes<HTMLInputElement>) => {
   return (
-    <Container>
+    <Container className="responsive-container">
       <Wrapper>
         <Input {...rest} />
         <FaSearch size={19} color={"var(--text-lightest)"} />

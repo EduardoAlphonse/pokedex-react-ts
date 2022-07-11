@@ -1,3 +1,6 @@
+// import { useEffect } from "react";
+// import { getPokemonColorById } from "../../services/api";
+
 import {
   Container,
   ColoredLabel,
@@ -16,6 +19,14 @@ type PokemonCardProps = {
 };
 
 export const PokemonCard = ({ id, image, name }: PokemonCardProps) => {
+  // let labelColor = "";
+
+  // useEffect(() => {
+  //   (async () => {
+  //     labelColor = await getPokemonColorById(id);
+  //   })();
+  // });
+
   return (
     <Container>
       <ColoredLabel style={{ background: "var(--text-dark)" }} />
@@ -24,8 +35,10 @@ export const PokemonCard = ({ id, image, name }: PokemonCardProps) => {
         <Image src={image} alt="name" />
       </ImageWrapper>
       <Info>
-        <Name>{name}</Name>
-        <Type>🔥</Type>
+        <Name style={{ display: "block", width: "100%", textAlign: "center" }}>
+          {name}
+        </Name>
+        {/* <Type>🔥</Type> */}
       </Info>
     </Container>
   );

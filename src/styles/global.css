@@ -15,6 +15,24 @@
   --white: #ffffff;
 }
 
+html {
+  background: var(--background);
+}
+
+@media screen and (min-width: 480px) {
+  .responsive-container {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .responsive-container {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+}
+
 body,
 button,
 input,

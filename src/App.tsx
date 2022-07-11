@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
-import { NamedAPIResourceList, PokemonClient, MainClient } from "pokenode-ts";
+import { NamedAPIResourceList } from "pokenode-ts";
 
 import { Header } from "./components/Header";
 import { Search } from "./components/Search";
 import { PokemonCard } from "./components/PokemonCard";
 import { PokemonList } from "./components/PokemonList";
 
+import { api } from "./services/api";
 import { getPokemonImageById } from "./utils/images";
 import { getPokemonIdByUrl } from "./utils/pokemonId";
 
@@ -16,16 +17,38 @@ function App() {
   const [pokemonsList, setPokemonsList] = useState<NamedAPIResourceList>(
     {} as NamedAPIResourceList
   );
+  const [filteredPokemonsList, setFilteredPokemonsList] =
+    useState<NamedAPIResourceList>({} as NamedAPIResourceList);
 
-  const api = new MainClient();
-
+  function filterPokemonsList() {
+    const formattedSearch = search.toLocaleLowerCase();
+    if (formattedSearch === "") {
+      setFilteredPokemonsList(pokemonsList);
+      return;
+    }
+    const newPokemonsList: NamedAPIResourceList = {
+      ...pokemonsList,
+      results: pokemonsList.results.filter((pokemon) =>
+        pokemon.name.includes(formattedSearch)
+      ),
+    };
+    setFilteredPokemonsList(newPokemonsList);
+  }
   useEffect(() => {
     (async () => {
-      const response = await api.pokemon.listPokemons(0, 20);
-      console.log(response);
+      const response = await api.pokemon.listPokemons(0, 30);
       setPokemonsList(response);
+      setFilteredPokemonsList(response);
     })();
   }, []);
+
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      filterPokemonsList();
+    });
+
+    return () => clearTimeout(timeout);
+  }, [search]);
 
   return (
     <div className="App">
@@ -36,9 +59,10 @@ function App() {
         onChange={(event) => setSearch(event.target.value)}
         placeholder="Search Pokémon..."
       />
-      <PokemonList>
-        {pokemonsList.results?.map((pokemon) => (
+      <PokemonList className="responsive-container">
+        {filteredPokemonsList.results?.map((pokemon) => (
           <PokemonCard
+            key={pokemon.name}
             id={Number(getPokemonIdByUrl(pokemon.url))}
             image={getPokemonImageById(getPokemonIdByUrl(pokemon.url))}
             name={pokemon.name}

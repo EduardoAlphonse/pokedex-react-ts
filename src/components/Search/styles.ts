@@ -1,13 +1,14 @@
 import styled from "styled-components";
 
 export const Wrapper = styled.div`
-  min-width: 400px;
+  width: 400px;
 `;
 
 export const Container = styled.div`
   display: flex;
   justify-content: center;
-  padding: 1rem;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
 
   ${Wrapper} {
     position: relative;
